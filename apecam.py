@@ -61,7 +61,7 @@ for ent in proxy.har['log']['entries']:
         
         r1 = requests.get(_url, stream=True)
         if(r1.status_code == 200 or r1.status_code == 206):
-			print(_url+'\n')
+            print(_url+'\n')
 			
             #Re-open output file to append new video
             with open(f"./recordings/{filename}",'ab') as f:
