@@ -71,7 +71,6 @@ for ent in proxy.har['log']['entries']:
                 f.write(data)
                 fetched.append(_url)
         else:
-            print(r1)
             print(f"Received unexpected status code {r1.status_code}")
 
 
