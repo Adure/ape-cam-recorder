@@ -69,7 +69,7 @@ def bytesto(bytes, to, bsize=1024):
     return bytes / (bsize ** a[to])
 
 clip = VideoFileClip(f"./recordings/{filename}")
-print(f"Captured {clip.duration} seconds of video ({bytesto(os.path.getsize(os.path.realpath('./recordings/'+filename)), 'm')}MB)")
+print(f"Captured {'%.2f'%clip.duration} seconds of video ({'%.1f'%bytesto(os.path.getsize(os.path.realpath('./recordings/'+filename)), 'm')}MB)")
 
 server.stop()
 driver.quit()
