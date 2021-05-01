@@ -68,6 +68,7 @@ def bytesto(bytes, to, bsize=1024):
     r = float(bytes)
     return bytes / (bsize ** a[to])
 
+#Display length and size of file
 clip = VideoFileClip(f"./recordings/{filename}")
 print(f"Captured {'%.2f'%clip.duration} seconds of video ({'%.1f'%bytesto(os.path.getsize(os.path.realpath('./recordings/'+filename)), 'm')}MB)")
 
