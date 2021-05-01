@@ -3,12 +3,13 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from browsermobproxy import Server
 import datetime
 import httpx
+import os
 from moviepy.editor import VideoFileClip
 
 URL = 'https://zoo.sandiegozoo.org/cams/ape-cam'
 
 #Start proxy server
-server = Server('D:/Users/Aran/Desktop/programming/ape cam downloader/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+server = Server(os.path.realpath('./browsermob-proxy-2.1.4/bin/browsermob-proxy'))
 server.start()
 proxy = server.create_proxy()
 
@@ -46,7 +47,7 @@ try:
                     
                 with httpx.stream("GET", _url) as r1:
                     if(r1.status_code == 200 or r1.status_code == 206):
-                        print(_url[45:]+'\n')
+                        print(f"Downloading chunk...{_url[45:]}"+'\n')
             			
                         #Re-open output file to append new video
                         with open(f"./recordings/{filename}",'ab') as f:
@@ -62,8 +63,13 @@ except KeyboardInterrupt:
     pass
 
 
+def bytesto(bytes, to, bsize=1024): 
+    a = {'k' : 1, 'm': 2, 'g' : 3, 't' : 4, 'p' : 5, 'e' : 6 }
+    r = float(bytes)
+    return bytes / (bsize ** a[to])
+
 clip = VideoFileClip(f"./recordings/{filename}")
-print(f"Captured {clip.duration} seconds of video")
+print(f"Captured {clip.duration} seconds of video ({bytesto(os.path.getsize(os.path.realpath('./recordings/'+filename)), 'm')}MB)")
 
 server.stop()
 driver.quit()
